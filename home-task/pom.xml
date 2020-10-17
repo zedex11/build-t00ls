@@ -2,7 +2,7 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mtn.training</groupId>
-    <artifactId>ci-1</artifactId>
+    <artifactId>ci-training</artifactId>
     <version>1.0</version>
     <build>
     <plugins>
