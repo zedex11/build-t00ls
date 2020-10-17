@@ -5,6 +5,7 @@
     <artifactId>ci-training</artifactId>
     <version>1.0</version>
     <build>
+    <finalName>$hello-${BUILD_NUMBER}</finalName>
     <plugins>
       <plugin>
         <!-- Build an executable JAR -->
