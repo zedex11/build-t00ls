@@ -1,4 +1,4 @@
-apply plugin: 'java'
+
 plugins {
     id 'java'
 }
@@ -10,3 +10,4 @@ jar {
         )
     }
 }
+apply plugin: 'java'
