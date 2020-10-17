@@ -6,7 +6,7 @@ plugins {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'com.mypackage.MyClass'
+                'Main-Class': 'com.test.Test'
         )
     }
 }
