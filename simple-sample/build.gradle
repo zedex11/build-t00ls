@@ -11,3 +11,12 @@ jar {
     }
 }
 apply plugin: 'java'
+class GreetingTask extends DefaultTask {
+    @Input
+    String greeting = 'hello from GreetingTask'
+
+    @TaskAction
+    def greet() {
+        println greeting
+    }
+}
