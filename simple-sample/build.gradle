@@ -1,4 +1,3 @@
-
 plugins {
     id 'java'
 }
@@ -11,12 +10,21 @@ jar {
     }
 }
 apply plugin: 'java'
-class GreetingTask extends DefaultTask {
-    @Input
-    String greeting = 'hello from GreetingTask'
 
-    @TaskAction
-    def greet() {
-        println greeting
-    }
+task(hello) {
+        doLast {
+        println "Hello from SShevtsov!"
+        }
+        dependsOn 'testcustom'
+}
+task(testcustom) {
+        doLast {
+        println "This is test-custom task!"
+        }
+        dependsOn 'buildcustom'
+}
+task(buildcustom) {
+        doLast {
+        println "Task build-custom!"
+        }
 }
