@@ -1,8 +1,7 @@
 plugins {
     id 'java'
 }
-archivesBaseName = 'imelnik1-ci'
-group = 'com.mtn.training'
+archivesBaseName = 'hryshchnka'
 
 dependencies {
         repositories {
@@ -12,19 +11,6 @@ dependencies {
         implementation 'org.apache.commons:commons-collections4:4.4'
         testImplementation 'junit:junit:4.13.1'
 }
-
-task 'hello' {
-    dependsOn 'test-custom'
-    doLast {
-        println 'Artefact created'
-    }
-}
-
-task 'test-custom'(type: Exec) {
-    dependsOn 'build-custom'
-    commandLine 'java', '-jar', jar.archiveFile.get()
-}
-
 task 'build-custom'(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
@@ -32,5 +18,15 @@ task 'build-custom'(type: Jar) {
         attributes(
                 'Main-Class': 'com.test.Project'
         )
+    }
+}
+task 'test-custom'(type: Exec) {
+    dependsOn 'build-custom'
+    commandLine 'java', '-jar', jar.archiveFile.get()
+}
+task 'hello' {
+    dependsOn 'test-custom'
+    doLast {
+        println 'completed successfully'
     }
 }
