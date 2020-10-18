@@ -26,7 +26,6 @@ task 'build-custom'(type: Jar) {
 
 build-custom.doLast {
     println "Task $build-custom.name is finished."
-    println  build-custom.myProperty 
 }
 
 task 'test-custom'(type: Exec) {
