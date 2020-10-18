@@ -1,0 +1,32 @@
+apply plugin: 'java'
+repositories {
+jcenter()
+}
+
+archivesBaseName = 'aafanasenko-gradle'
+
+dependencies {
+compile 'commons-collections:commons-collections:3.2.2'
+compile 'log4j:log4j:1.2.17'
+testCompile 'junit:junit:4.13.1'
+}
+
+
+task 'build-custom'(type: Jar){
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+        with jar
+        manifest {
+            attributes(
+                    'Main-Class': 'com.test.Project'
+            )
+        }
+}
+
+task 'test-custom'(type:Test) {
+     dependsOn 'build-custom'
+}
+
+task 'hello' (type: Exec) {
+    dependsOn 'test-custom'
+    commandLine 'java', '-jar', jar.archiveFile.get()
+}
