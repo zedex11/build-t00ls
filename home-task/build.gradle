@@ -4,12 +4,7 @@ repositories {
     mavenCentral()
 }
 
-manifest {
-        attributes(
-                'Main-Class': 'com.test.Project'
-        )
-    }
-    
+   
 archivesBaseName = 'vgulinskiy-gradle-test'
 
 dependencies {
@@ -20,7 +15,11 @@ dependencies {
 
 
 task 'build-custom'(type: Jar) {
-    
+    manifest {
+        attributes(
+                'Main-Class': 'com.test.Project'
+        )
+    }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
     
