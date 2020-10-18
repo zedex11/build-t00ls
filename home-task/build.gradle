@@ -4,7 +4,6 @@ plugins {
 archivesBaseName = 'hryshchnka'
 group = 'com.mtn.training'
 version = '3.0'
-
 dependencies {
         repositories {
             mavenCentral()
@@ -13,8 +12,6 @@ dependencies {
         implementation 'org.apache.commons:commons-collections4:4.4'
         testImplementation 'junit:junit:4.13.1'
 }
-
-
 task 'build-custom'(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
@@ -24,18 +21,13 @@ task 'build-custom'(type: Jar) {
         )
     }
 }
-
-// task 'test-custom'(type: Exec) {
-//     dependsOn 'build-custom'
-//     commandLine 'java', '-jar', jar.archiveFile.get()
-// }
-
-
+task 'test-custom'(type: Exec) {
+    dependsOn 'build-custom'
+    commandLine 'java', '-jar', jar.archiveFile.get()
+}
 task 'hello' {
     dependsOn 'test-custom'
     doLast {
         println 'completed successfully'
     }
 }
-
-
