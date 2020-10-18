@@ -1,32 +1,41 @@
-apply plugin: 'java'
-repositories {
-jcenter()
+plugins {
+    id 'java'
 }
-
-archivesBaseName = 'hryshchanka'
+archivesBaseName = 'hryshchnka'
+group = 'com.mtn.training'
+version = '3.0'
 
 dependencies {
-compile 'org.apache.commons:commons-collections4:4.4'
-compile 'log4j:log4j:1.2.17'
-testCompile 'junit:junit:4.13.1'
-}
-
-
-task 'build-custom'(type: Jar){
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-        with jar
-        manifest {
-            attributes(
-                    'Main-Class': 'com.test.Project'
-            )
+        repositories {
+            mavenCentral()
         }
+        implementation 'log4j:log4j:1.2.17'
+        implementation 'org.apache.commons:commons-collections4:4.4'
+        testImplementation 'junit:junit:4.13.1'
 }
 
-task 'test-custom'(type:Test) {
-     dependsOn 'build-custom'
+
+task 'build-custom'(type: Jar) {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+    manifest {
+        attributes(
+                'Main-Class': 'com.test.Project'
+        )
+    }
 }
 
-task 'hello' (type: Exec) {
+// task 'test-custom'(type: Exec) {
+//     dependsOn 'build-custom'
+//     commandLine 'java', '-jar', jar.archiveFile.get()
+// }
+
+
+task 'hello' {
     dependsOn 'test-custom'
-    commandLine 'java', '-jar', jar.archiveFile.get()
+    doLast {
+        println 'completed successfully'
+    }
 }
+
+
