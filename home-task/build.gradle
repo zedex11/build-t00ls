@@ -1,0 +1,56 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+
+plugins {
+    id 'java'
+}
+archivesBaseName = 'vgulinskiy-gradle-test'
+
+dependencies {
+        implementation 'org.apache.commons:commons-collections4:4.4
+        implementation 'log4j:log4j:1.2.17'
+        testImplementation 'junit:junit:4.13.1'
+}
+
+
+task 'build-custom'(type: Jar) {
+    ext.myProperty = "Type is - Jar"
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+    manifest {
+        attributes(
+                'Main-Class': 'com.test.Project'
+        )
+    }
+}
+
+build-custom.doLast {
+    println "Task $build-custom.name is finished."
+    println  build-custom.myProperty 
+}
+
+task 'test-custom'(type: Exec) {
+    dependsOn 'build-custom'
+    commandLine 'java', '-jar', jar.archiveFile.get()
+}
+
+test-custom.doLast {
+    println "Task $test-custom.name is finished."
+}
+
+task 'hello' {
+    dependsOn 'test-custom'
+    doLast {
+        String someString = 'Viktor Gulinskiy'
+        println "I'm $someString. Hello from me !!!"
+    }
+}
+
+hello.doFirst {
+    println " Hello from the $hello.name task !!!"
+}
+
