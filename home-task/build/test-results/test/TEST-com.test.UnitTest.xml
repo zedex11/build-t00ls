@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.test.UnitTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-10-18T16:16:09" hostname="MiWiFi-R3L-srv" time="0.024">
+  <properties/>
+  <testcase name="test" classname="com.test.UnitTest" time="0.023"/>
+  <testcase name="testAppHasAGreeting" classname="com.test.UnitTest" time="0.001"/>
+  <system-out><![CDATA[test
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,52 @@
+apply plugin: 'java'
+
+repositories {
+	jcenter()
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core" }
+}
+
+dependencies {	
+	repositories {
+		jcenter()
+	        mavenLocal()
+        	maven { url "https://repo.grails.org/grails/core" }
+	}
+	compile 'log4j:log4j:1.2.17'
+	compile 'org.apache.commons:commons-collections4:4.0'
+	testCompile 'junit:junit:4.13.1'
+}
+
+jar {
+	manifest {
+		attributes(
+			'Main-Class': 'com.test.Project'
+		)
+	}
+}
+
+archivesBaseName = 'vratomski'
+
+task 'hello' {
+	dependsOn 'test-custom'
+}
+
+task 'test-custom'(type: Exec) {
+	dependsOn 'build-custom'
+	commandLine 'java', '-jar', jar.archiveFile.get()
+	manifest {
+            attributes(
+                    'Main-Class': 'com.test.Project'
+            )
+        }
+}
+
+task 'build-custom'(type: Jar) {
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+        	with jar
+        	manifest {
+            		attributes(
+                    	'Main-Class': 'com.test.Project'
+            		)
+        	}	
+}
