@@ -27,7 +27,7 @@ task 'build-custom'(type: Jar) {
 
 task 'test-custom'(type: Exec) {
     dependsOn 'build-custom'
-    println " It's testing task"    
+    commandLine 'java', '-jar', jar.archiveFile.get()    
 }
 
 
