@@ -13,7 +13,7 @@ dependencies {
 }
 
 
-task 'build-custom'(type: Jar) {
+task build-custom(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
     manifest {
@@ -23,7 +23,7 @@ task 'build-custom'(type: Jar) {
     }
 }
 
-task 'test-custom'(type: Exec) {
+task test-custom(type: Exec) {
     dependsOn 'build-custom'
     println " It's testing task"    
 }
@@ -32,7 +32,7 @@ test-custom.doLast {
     println "Task $test-custom.name is finished."
 }
 
-task 'hello' {
+task hello {
     dependsOn 'test-custom'
     doLast {
         String someString = 'Viktor Gulinskiy'
