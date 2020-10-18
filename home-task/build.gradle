@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+}
+archivesBaseName = 'hryshchnka'
+group = 'com.mtn.training'
+version = '3.0'
+
+dependencies {
+        repositories {
+            mavenCentral()
+        }
+        implementation 'log4j:log4j:1.2.17'
+        implementation 'org.apache.commons:commons-collections4:4.4'
+        testImplementation 'junit:junit:4.13.1'
+}
+
+
+task 'build-custom'(type: Jar) {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+    manifest {
+        attributes(
+                'Main-Class': 'com.test.Project'
+        )
+    }
+}
+
+task 'test-custom'(type: Exec) {
+    dependsOn 'build-custom'
+    commandLine 'java', '-jar', jar.archiveFile.get()
+}
+
+
+task 'hello' {
+    dependsOn 'test-custom'
+    doLast {
+        println 'completed successfully'
+    }
+}
+
+
