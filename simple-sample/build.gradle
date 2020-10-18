@@ -10,7 +10,7 @@ jar {
     }
 }
 apply plugin: 'java'
-
+ 
 task(hello) {
         doLast {
         println "Hello from SShevtsov!"
