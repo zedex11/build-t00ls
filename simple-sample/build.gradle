@@ -31,7 +31,7 @@ task 'test-custom'(type:Exec) {
 dependsOn 'build-custom'
 workingDir 'build/libs'
 //on linux
-commandLine 'java', '-jar','sshevtsov-customTask-all.jar'
+commandLine 'java', '-jar','sshevtsov.jar'
 ignoreExitValue true
 doLast {
     if(execResult.exitValue == 0) {
