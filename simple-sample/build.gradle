@@ -49,8 +49,8 @@ task 'build-custom'(type: Jar) {
                 'Main-Class': 'com.test.Test'
         )
 }
-classifier = 'all'
-    baseName = 'sshevtsov' + '-customTask'
+//classifier = 'all'
+    baseName = 'sshevtsov'
 from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 with jar
 }
