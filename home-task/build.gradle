@@ -1,0 +1,59 @@
+
+apply plugin: 'java'
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.test.Project'
+        )
+    }
+baseName = 'sshevtsov'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    testCompile group: 'junit', name: 'junit', version: '4.7'
+}
+
+// test class
+task runApp(type: JavaExec) {
+classpath = sourceSets.main.runtimeClasspath
+main = 'com.test.Project'
+}
+
+//-------------------------------------
+task 'hello'(description: 'print HW!') {
+        dependsOn 'test-custom'
+        println "Hello from SShevtsov!"
+}
+
+task 'test-custom'(type:Exec) {
+dependsOn 'build-custom'
+workingDir 'build/libs'
+//on linux
+commandLine 'java', '-jar','sshevtsov.jar'
+ignoreExitValue true
+doLast {
+    if(execResult.exitValue == 0) {
+        println "Success"
+    } else {
+        println "Fail"
+    }
+}
+}
+
+
+task 'build-custom'(type: Jar) {
+    manifest {
+        attributes(
+                'Main-Class': 'com.test.Project'
+                )
+}
+//classifier = 'all'
+baseName = 'sshevtsov'
+from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+with jar
+}
