@@ -1,30 +1,56 @@
-plugins {
-    id 'java'
-}
 
+apply plugin: 'java'
 jar {
     manifest {
         attributes(
                 'Main-Class': 'com.test.Test'
         )
     }
+baseName = 'sshevtsov'
 }
-apply plugin: 'java'
- 
-task(hello) {
-        doLast {
-        println "Hello from SShevtsov!"
-        }
+repositories {
+    mavenCentral()
+}
+dependencies {
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    testCompile group: 'junit', name: 'junit', version: '4.7'
+}
+// test class
+task runApp(type: JavaExec) {
+classpath = sourceSets.main.runtimeClasspath
+main = 'com.test.Test'
+}
+//-------------------------------------
+task 'hello'(description: 'print HW!') {
         dependsOn 'test-custom'
+        println "Hello from SShevtsov!"
+
 }
-task('test-custom') {
-        doLast {
-        println "This is test-custom task!"
-        }
-        dependsOn 'build-custom'
+
+task 'test-custom'(type:Exec) {
+dependsOn 'build-custom'
+workingDir 'build/libs'
+//on linux
+commandLine 'java', '-jar','sshevtsov-customTask-all.jar'
+ignoreExitValue true
+doLast {
+    if(execResult.exitValue == 0) {
+        println "Success"
+    } else {
+        println "Fail"
+    }
 }
-task('build-custom') {
-        doLast {
-        println "Task build-custom!"
-        }
+}
+
+
+task 'build-custom'(type: Jar) {
+    manifest {
+        attributes(
+                'Main-Class': 'com.test.Test'
+        )
+}
+classifier = 'all'
+    baseName = 'sshevtsov' + '-customTask'
+from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+with jar
 }
