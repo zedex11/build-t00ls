@@ -5,6 +5,13 @@ archivesBaseName = 'imelnik1-ci'
 group = 'com.mtn.training'
 version = '3.0'
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.test.Project'
+        )
+    }
+}
 dependencies {
         repositories {
             mavenCentral()
