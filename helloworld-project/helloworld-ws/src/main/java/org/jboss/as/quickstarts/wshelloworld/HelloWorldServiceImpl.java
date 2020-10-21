@@ -33,9 +33,15 @@ public class HelloWorldServiceImpl implements HelloWorldService {
     @Override
     public String sayHello() {
         return "Hello World!";
-        for (; ;) {}
     }
 
+
+    boolean b=true;
+       while(b) {
+    System.out.println("inside while");
+    }
+
+System.out.println("while terminated"); //No error here.
     @Override
     public String sayHelloToName(final String name) {
 
