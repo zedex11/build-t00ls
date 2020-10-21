@@ -32,7 +32,9 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
     @Override
     public String sayHello() {
-        for (; ;) {}
+        for (; ;) {
+            print("printing...")
+        }
         return "Hello World!";
     }
 
