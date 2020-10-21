@@ -36,7 +36,7 @@ public class HelloWorldServiceImpl implements HelloWorldService {
     }
 
     for (; ;) {
-        print("printing...")
+        print("printing...");
     }
 
     @Override
