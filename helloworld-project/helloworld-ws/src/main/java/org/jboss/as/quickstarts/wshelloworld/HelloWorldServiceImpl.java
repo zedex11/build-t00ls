@@ -36,6 +36,13 @@ public class HelloWorldServiceImpl implements HelloWorldService {
     }
 
     @Override
+    public void infiniteLoopUsingWhile() {
+        while (true) {
+            // do something
+        }
+    }
+
+    @Override
     public String sayHelloToName(final String name) {
 
         /* Create a list with just the one value */
