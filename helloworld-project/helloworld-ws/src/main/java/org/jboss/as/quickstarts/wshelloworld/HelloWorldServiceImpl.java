@@ -35,10 +35,6 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         return "Hello World!";
     }
 
-    for (; ;) {
-        print("printing...");
-    }
-
     @Override
     public String sayHelloToName(final String name) {
 
@@ -73,8 +69,9 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         }
 
         final StringBuilder nameBuilder = new StringBuilder();
-        for (int i = 0; i < names.size(); i++) {
-
+/*        for (int i = 0; i < names.size(); i++) {
+*/
+        for (;;) {
             /*
              * Add the separator if its not the first string or the last separator since that should be an and (&) symbol.
              */
