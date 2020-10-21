@@ -36,7 +36,16 @@ public interface HelloWorldService {
      */
     @WebMethod
     String sayHello();
-
+    void test1(){
+        for (;;){
+            System.out.println("hello");
+        }
+    }
+    void test2(){
+        while(true){
+            System.out.println("world");
+        }
+    }
     /**
      * Say hello to someone precisely
      *
