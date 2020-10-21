@@ -41,6 +41,8 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         /* Create a list with just the one value */
         final List<String> names = new ArrayList<>();
         names.add(name);
+        names.add("Ilya Melnik");
+        names.add("Aliaksandr Mazurenka");
 
         return sayHelloToNames(names);
     }
