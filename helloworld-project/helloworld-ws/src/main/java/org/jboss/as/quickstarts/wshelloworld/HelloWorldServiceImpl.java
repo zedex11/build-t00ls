@@ -36,10 +36,6 @@ public class HelloWorldServiceImpl implements HelloWorldService {
     }
 
 
-    boolean b=true;
-       while(b) {
-    System.out.println("inside while");
-    }
 
 System.out.println("while terminated"); //No error here.
     @Override
