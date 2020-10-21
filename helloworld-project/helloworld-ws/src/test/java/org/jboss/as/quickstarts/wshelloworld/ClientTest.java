@@ -128,6 +128,8 @@ public class ClientTest {
         names.add("John");
         names.add("Mary");
         names.add("Mark");
+        names.add("Ilya Melnik");
+        names.add("Aliaksandr Mazurenka");
 
         // Get a response from the WebService
         final String response = client.sayHelloToNames(names);
