@@ -69,9 +69,8 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         }
 
         final StringBuilder nameBuilder = new StringBuilder();
-/*        for (int i = 0; i < names.size(); i++) {
-*/       i = 1;
-        while(i>0) {
+        for (int i = 0; i < names.size(); i++) {
+
             /*
              * Add the separator if its not the first string or the last separator since that should be an and (&) symbol.
              */
