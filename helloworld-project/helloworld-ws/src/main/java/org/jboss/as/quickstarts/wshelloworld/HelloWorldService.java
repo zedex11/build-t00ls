@@ -36,6 +36,7 @@ public interface HelloWorldService {
      */
     @WebMethod
     String sayHello();
+
     /**
      * Say hello to someone precisely
      *
