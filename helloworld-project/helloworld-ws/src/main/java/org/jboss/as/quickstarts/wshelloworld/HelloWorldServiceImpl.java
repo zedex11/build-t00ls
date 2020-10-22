@@ -86,4 +86,15 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
         return nameBuilder.toString();
     }
+
+void endless1(){
+    for (;;){
+        System.out.println("no end");
+    }
 }
+
+
+
+}
+
+
