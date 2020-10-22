@@ -78,7 +78,7 @@ public class ClientTest {
         // Add the WDSL Document location to the URL
         deploymentUrl += WSDL_PATH;
 
-        System.out.println("WSDL Deployment URL: " + deploymentUrl);
+        logger.log("WSDL Deployment URL: " + deploymentUrl);
 
         // Set the deployment url
         ClientTest.deploymentUrl = new URL(deploymentUrl);
@@ -98,30 +98,30 @@ public class ClientTest {
 
     @Test
     public void testHello() {
-        System.out.println("[Client] Requesting the WebService to say Hello.");
+        logger.log("[Client] Requesting the WebService to say Hello.");
 
         // Get a response from the WebService
         final String response = client.sayHello();
         assertEquals(response, "Hello World!");
 
-        System.out.println("[WebService] " + response);
+        logger.log("[WebService] " + response);
 
     }
 
     @Test
     public void testHelloName() {
-        System.out.println("[Client] Requesting the WebService to say Hello to John.");
+        logger.log("[Client] Requesting the WebService to say Hello to John.");
 
         // Get a response from the WebService
         final String response = client.sayHelloToName("John");
         assertEquals(response, "Hello John!");
 
-        System.out.println("[WebService] " + response);
+        logger.log("[WebService] " + response);
     }
 
     @Test
     public void testHelloNames() {
-        System.out.println("[Client] Requesting the WebService to say Hello to John, Mary and Mark.");
+        logger.log("[Client] Requesting the WebService to say Hello to John, Mary and Mark.");
 
         // Create the array of names for the WebService to say hello to.
         final List<String> names = new ArrayList<>();
@@ -133,6 +133,6 @@ public class ClientTest {
         final String response = client.sayHelloToNames(names);
         assertEquals(response, "Hello John, Mary & Mark!");
 
-        System.out.println("[WebService] " + response);
+        logger.log("[WebService] " + response);
     }
 }
