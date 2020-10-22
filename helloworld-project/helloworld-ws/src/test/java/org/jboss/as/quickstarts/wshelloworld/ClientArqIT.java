@@ -37,6 +37,11 @@ import org.junit.runner.RunWith;
  *
  * @author lnewson@redhat.com
  */
+
+public class globalVar {
+    static String web = "[WebService] ";
+}
+
 @RunWith(Arquillian.class)
 public class ClientArqIT {
     /**
@@ -75,7 +80,7 @@ public class ClientArqIT {
         final String response = client.sayHello();
         assertEquals(response, "Hello World!");
 
-        System.out.println("[WebService] " + response);
+        System.out.println(globalVar.web + response);
 
     }
 
@@ -87,7 +92,7 @@ public class ClientArqIT {
         final String response = client.sayHelloToName("John");
         assertEquals(response, "Hello John!");
 
-        System.out.println("[WebService] " + response);
+        System.out.println(globalVar.web + response);
     }
 
     @Test
@@ -104,6 +109,6 @@ public class ClientArqIT {
         final String response = client.sayHelloToNames(names);
         assertEquals(response, "Hello John, Mary & Mark!");
 
-        System.out.println("[WebService] " + response);
+        System.out.println(globalVar.web + response);
     }
 }
