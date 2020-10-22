@@ -22,7 +22,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.*;
 
 import org.junit.Assume;
 import org.junit.Before;
@@ -51,7 +50,7 @@ public class ClientTest {
     /**
      * The Default Server URL if one isn't specified as a System Property
      */
-    private static final String DEFAULT_SERVER_URL = "http://jenkins.k8s.dkramich.playpit.by/";
+    private static final String DEFAULT_SERVER_URL = "http://localhost:8080/";
 
     private static URL deploymentUrl;
 
@@ -79,7 +78,7 @@ public class ClientTest {
         // Add the WDSL Document location to the URL
         deploymentUrl += WSDL_PATH;
 
-        logger.info("WSDL Deployment URL: " + deploymentUrl);
+        System.out.println("WSDL Deployment URL: " + deploymentUrl);
 
         // Set the deployment url
         ClientTest.deploymentUrl = new URL(deploymentUrl);
@@ -99,30 +98,30 @@ public class ClientTest {
 
     @Test
     public void testHello() {
-        logger.info("[Client] Requesting the WebService to say Hello.");
+        System.out.println("[Client] Requesting the WebService to say Hello.");
 
         // Get a response from the WebService
         final String response = client.sayHello();
         assertEquals(response, "Hello World!");
 
-        logger.info("[WebService] " + response);
+        System.out.println("[WebService] " + response);
 
     }
 
     @Test
     public void testHelloName() {
-        logger.info("[Client] Requesting the WebService to say Hello to John.");
+        System.out.println("[Client] Requesting the WebService to say Hello to John.");
 
         // Get a response from the WebService
         final String response = client.sayHelloToName("John");
         assertEquals(response, "Hello John!");
 
-        logger.info("[WebService] " + response);
+        System.out.println("[WebService] " + response);
     }
 
     @Test
     public void testHelloNames() {
-        logger.info("[Client] Requesting the WebService to say Hello to John, Mary and Mark.");
+        System.out.println("[Client] Requesting the WebService to say Hello to John, Mary and Mark.");
 
         // Create the array of names for the WebService to say hello to.
         final List<String> names = new ArrayList<>();
@@ -134,6 +133,6 @@ public class ClientTest {
         final String response = client.sayHelloToNames(names);
         assertEquals(response, "Hello John, Mary & Mark!");
 
-        logger.info("[WebService] " + response);
+        System.out.println("[WebService] " + response);
     }
 }
