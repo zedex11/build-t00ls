@@ -93,6 +93,11 @@ void endless1(){
     }
 }
 
+void endless2(){
+    for (;;){
+        System.out.println("no chances");
+    }
+}
 
 
 }
