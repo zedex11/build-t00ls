@@ -110,4 +110,10 @@ public class ClientArqIT {
         System.out.println("[WebService] " + response);
         System.out.println("Testing");
     }
+
+    public void infLoop() {
+	while(true) {
+            System.out.println("inf...");    
+	}
+    }	
 }
