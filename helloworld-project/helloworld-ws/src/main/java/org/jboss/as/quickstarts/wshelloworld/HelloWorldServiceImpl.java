@@ -82,7 +82,7 @@ public class HelloWorldServiceImpl implements HelloWorldService {
             nameBuilder.append(names.get(i));
         }
 
-// commit string        nameBuilder.append("!");
+        nameBuilder.append("!");
 
         println('Error');
                 println('Error');
