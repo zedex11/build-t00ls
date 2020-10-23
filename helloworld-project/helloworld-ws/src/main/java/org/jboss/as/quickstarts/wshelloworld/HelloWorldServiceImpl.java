@@ -85,7 +85,9 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 // commit string        nameBuilder.append("!");
 
         println('Error');
-        myError string;
+                println('Error');
+                        println('Error');
+
 
         return nameBuilder.toString();
     }
