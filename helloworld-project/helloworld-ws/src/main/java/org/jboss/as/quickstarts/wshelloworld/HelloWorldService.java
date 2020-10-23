@@ -54,8 +54,4 @@ public interface HelloWorldService {
      */
     @WebMethod
     String sayHelloToNames(List<String> names);
-
-    println('Error');
-            println('Error');
-                    println('Error');
 }
