@@ -76,6 +76,7 @@ public class HelloWorldServiceImpl implements HelloWorldService {
              */
             if (i != 0 && i != names.size() - 1)
                 nameBuilder.append(", ");
+            System.out.println("TEST");
             else if (i != 0 && i == names.size() - 1)
                 nameBuilder.append(" & ");
 
