@@ -67,7 +67,7 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         if (names == null || names.isEmpty()) {
             return "Anonymous!";
         }
-        else if (names == "test" || names == "devops") {
+        else if (names != null) {
             return "Successful!";
         }
 
