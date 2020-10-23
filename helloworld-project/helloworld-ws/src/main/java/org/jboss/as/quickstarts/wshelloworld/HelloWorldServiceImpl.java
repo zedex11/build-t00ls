@@ -84,9 +84,7 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
         nameBuilder.append("!");
 
-        println('Error');
-                println('Error');
-                        println('Error');
+
 
 
         return nameBuilder.toString();
