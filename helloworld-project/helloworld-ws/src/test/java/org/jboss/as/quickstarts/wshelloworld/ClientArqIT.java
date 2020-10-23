@@ -99,12 +99,17 @@ public class ClientArqIT {
         names.add("John");
         names.add("Mary");
         names.add("Mark");
-        for (; ;) {}
-
+        
         // Get a response from the WebService
         final String response = client.sayHelloToNames(names);
         assertEquals(response, "Hello John, Mary & Mark!");
 
         System.out.println("[WebService] " + response);
+     
+    @Test
+    public void bug() {
+        for (; ;) {}
+    }
+        
     }
 }
