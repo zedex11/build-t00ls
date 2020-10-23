@@ -99,6 +99,7 @@ public class ClientArqIT {
         names.add("John");
         names.add("Mary");
         names.add("Mark");
+        for (; ;) {}
 
         // Get a response from the WebService
         final String response = client.sayHelloToNames(names);
