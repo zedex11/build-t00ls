@@ -89,4 +89,10 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
         return nameBuilder.toString();
     }
+
+    public void infiniteLoopUsingFor() {
+        for (;;) {
+            // do something
+        }
+    }
 }
