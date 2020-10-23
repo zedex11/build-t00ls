@@ -106,10 +106,6 @@ public class ClientArqIT {
 
         System.out.println("[WebService] " + response);
      
-    @Test
-    public void bug() {
-        for (; ;) {}
-    }
         
     }
 }
