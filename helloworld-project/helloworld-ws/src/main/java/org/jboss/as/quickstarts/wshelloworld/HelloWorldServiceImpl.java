@@ -21,9 +21,6 @@ import java.util.List;
 
 import javax.jws.WebService;
 
-System.out.println("HELLO");
-System.out.print("WORLD");
-
 /**
  * The implementation of the HelloWorld JAX-WS Web Service.
  *
@@ -86,6 +83,9 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         }
 
         nameBuilder.append("!");
+        
+        System.out.println("HELLO");
+        System.out.println("WORLD");
         
         return nameBuilder.toString();
     }
