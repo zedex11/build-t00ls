@@ -88,12 +88,14 @@ public class ClientArqIT {
         assertEquals(response, "Hello John!");
 
         System.out.println("[WebService] " + response);
+        System.out.println("Hello ");
+        
     }
 
     @Test
     public void testHelloNames() {
         System.out.println("[Client] Requesting the WebService to say Hello to John, Mary and Mark.");
-
+        System.out.println("Hello ///"); 
         // Create the array of names for the WebService to say hello to.
         final List<String> names = new ArrayList<>();
         names.add("John");
