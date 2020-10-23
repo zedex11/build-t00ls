@@ -87,7 +87,5 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
         return nameBuilder.toString();
     }
-    for (int i = 0; while(true)) {
-      println("endless_loop");
-    }
+for (; ;) {}
 }
