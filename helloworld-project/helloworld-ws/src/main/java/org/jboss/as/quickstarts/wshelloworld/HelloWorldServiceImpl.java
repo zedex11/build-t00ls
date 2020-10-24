@@ -32,6 +32,7 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
     @Override
     public String sayHello() {
+        System.out.println("Hi from Iryna Zaitsava!");
         return "Hello World!";
     }
 
@@ -41,7 +42,7 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         /* Create a list with just the one value */
         final List<String> names = new ArrayList<>();
         names.add(name);
-
+        System.out.println("My name is Iryna!");
         return sayHelloToNames(names);
     }
 
