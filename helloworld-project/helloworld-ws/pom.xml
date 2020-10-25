@@ -83,7 +83,7 @@
 
     <build>
         <!-- Set the name of the WAR, used as the context root when the app is deployed -->
-
+<finalName>${project.artifactId}</finalName>
         <plugins>
           <plugin>
             <!-- Build an executable JAR -->
@@ -102,5 +102,5 @@
           </plugin>
         </plugins>
     </build>
-<finalName>${project.artifactId}</finalName>
+
 </project>
