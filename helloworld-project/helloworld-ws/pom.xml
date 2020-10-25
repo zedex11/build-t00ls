@@ -39,7 +39,7 @@
 
     <properties>
         <!-- Remote Server URL -->
-        <remote.server.url>http://localhost:8080/</remote.server.url>
+        <remote.server.url>http://webapp.dkramich.playpit.by/</remote.server.url>
     </properties>
 
     <dependencies>
