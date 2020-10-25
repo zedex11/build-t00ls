@@ -95,7 +95,7 @@
                 <manifest>
                   <addClasspath>true</addClasspath>
                   <classpathPrefix>lib/</classpathPrefix>
-                  <mainClass>org.jboss.as.quickstarts.wshelloworld.HelloWorldService</mainClass>
+                  <mainClass>org.jboss.as.quickstarts.wshelloworld.HelloWorldServiceImpl</mainClass>
                 </manifest>
               </archive>
             </configuration>
