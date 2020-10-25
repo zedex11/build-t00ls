@@ -22,7 +22,7 @@
         <groupId>org.jboss.eap.quickstarts</groupId>
         <artifactId>quickstart-parent</artifactId>
         <version>7.1.0.GA</version>
-        <relativePath>../pom.xml</relativePath>
+<!-- MY COMMENT       <relativePath>../pom.xml</relativePath> -->
     </parent>
     <artifactId>helloworld-ws</artifactId>
     <packaging>war</packaging>
@@ -55,7 +55,7 @@
                 <manifest>
                   <addClasspath>true</addClasspath>
                   <classpathPrefix>lib/</classpathPrefix>
-                  <mainClass>org.jboss.as.quickstarts.wshelloworld.HelloWorldService</mainClass>
+                  <mainClass>11111org.jboss.as.quickstarts.wshelloworld.HelloWorldService</mainClass>
                 </manifest>
               </archive>
             </configuration>
