@@ -17,7 +17,7 @@ spec:
         app: tomcat
     spec:
       containers:
-      - image: ${ARTEFACT_NAME}
+      - image: ${ARTEFACT_BUILD}
         ports: 
           - containerPort: 8080
             protocol: TCP
