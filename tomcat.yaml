@@ -31,10 +31,6 @@ spec:
         name: tomcat
       imagePullSecrets:
       - name: regcred
-      readinessProbe:
-        httpGet:
-          path: /helloworld-ws/
-          port: 8080
 
 ---
 apiVersion: v1
