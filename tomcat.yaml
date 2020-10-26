@@ -26,9 +26,14 @@ spec:
       - image: docker.k8s.shryshchanka.playpit.by/tomcat:custom
         ports: 
           - containerPort: 8080
+            name: liveness-port
             protocol: TCP
         imagePullPolicy: Always
         name: tomcat
+      livenessProbe:
+        httpGet:
+          path: /helloworld-ws/
+          port: liveness-port
       imagePullSecrets:
       - name: regcred
 
