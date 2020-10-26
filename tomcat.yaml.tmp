@@ -21,16 +21,18 @@ spec:
         ports: 
           - containerPort: 8080
             protocol: TCP
-        livenessProbe:
-          tcpSocket:
+        readinessProbe:
+          httpGet:
+            path: /helloworld-ws/
             port: 8080
-          initialDelaySeconds: 15
-          periodSeconds: 20
+        livenessProbe:
+          httpGet:
+            path: /helloworld-ws/
+            port: 8080
         imagePullPolicy: Always
         name: tomcat
       imagePullSecrets:
       - name: tomcat
-
 ---
 apiVersion: v1
 kind: Service
