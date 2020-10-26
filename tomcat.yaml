@@ -29,6 +29,14 @@ spec:
             protocol: TCP
         imagePullPolicy: Always
         name: tomcat
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /helloworld-ws/
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /helloworld-ws/
       imagePullSecrets:
       - name: regcred
 
