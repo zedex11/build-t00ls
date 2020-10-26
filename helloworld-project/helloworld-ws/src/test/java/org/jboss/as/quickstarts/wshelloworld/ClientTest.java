@@ -50,7 +50,7 @@ public class ClientTest {
     /**
      * The Default Server URL if one isn't specified as a System Property
      */
-    private static final String DEFAULT_SERVER_URL = "http://localhost:8080/";
+    private static final String DEFAULT_SERVER_URL = "http://webapp.dkramich.playpit.by/";
 
     private static URL deploymentUrl;
 
