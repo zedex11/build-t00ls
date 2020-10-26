@@ -17,18 +17,13 @@
 <html>
     <head><title>helloworld-ws</title></head>
     
-    <head>
-        <title>Build Number</title>
-        <script type="text/javascript">
-         console.log("%BUILD_NUMBER%") // OK
-        </script>
-      </head>
 
     <body>
 
     	<h1>helloworld-imelnik based on tomcat:8.5</h1>
     	<p>
-    	  Builded by Ilya Melnik.
+        Builded by Ilya Melnik.
+        Build number is ${myEnvironment.BUILD_NUMBER}
     	</p>
     </body>
 
