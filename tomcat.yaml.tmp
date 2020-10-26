@@ -1,5 +1,5 @@
 ---
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
@@ -17,10 +17,15 @@ spec:
         app: tomcat
     spec:
       containers:
-      - image: ${ARTEFACT_BUILD}
+      - image: ${ARTEFACT_NAME}
         ports: 
           - containerPort: 8080
             protocol: TCP
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20
         imagePullPolicy: Always
         name: tomcat
       imagePullSecrets:
