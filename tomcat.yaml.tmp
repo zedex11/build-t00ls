@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tomcat
+  name: tomcat
+  namespace: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      containers:
+      - image: ${ARTEFACT_BUILD}
+        ports: 
+          - containerPort: 8080
+            protocol: TCP
+        imagePullPolicy: Always
+        name: tomcat
+      imagePullSecrets:
+      - name: tomcat
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: tomcat
+  name: tomcat
+  namespace: jenkins
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: tomcat
+ 
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: tomcat
+  namespace: jenkins
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: helloworld-aafanasenko.k8s.aafanasenko.playpit.by
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: tomcat
+            servicePort: 80
