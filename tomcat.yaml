@@ -31,9 +31,10 @@ spec:
         imagePullPolicy: Always
         name: tomcat
       livenessProbe:
-        httpGet:
-          path: /helloworld-ws/
-          port: liveness-port
+        tcpSocket:
+          port: 8080
+        initialDelaySeconds: 15
+        periodSeconds: 20
       imagePullSecrets:
       - name: regcred
 
