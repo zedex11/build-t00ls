@@ -15,25 +15,22 @@
     limitations under the License.
 -->
 <html>
-    <head><title>helloworld-ws Quickstart</title></head>
+    <head><title>helloworld-ws</title></head>
+    
+    <head>
+        <title>Build Number</title>
+        <script type="text/javascript">
+         console.log("%BUILD_NUMBER%") // OK
+        </script>
+      </head>
 
     <body>
 
-    	<h1>My customized change to helloworld-ws</h1>
+    	<h1>helloworld-imelnik based on tomcat:8.5</h1>
     	<p>
-    	  The <i>helloworld-ws</i> quickstart demonstrates the use of <b>JAX-WS</b> in
-          Red Hat JBoss Enterprise Application Platform as a simple Hello World application.
-    	</p>
-    	<p>
-    	 There is no user interface for this quickstart. Instead, you can verify the
-         Web Service is running and deployed correctly by accessing the following URL:
-         </p>
-         <div style="margin-left: 1em;">
-         <a href="HelloWorldService?wsdl">HelloWorldService?wsdl</a>
-         </div>
-         <p>
-          This URL will display the WSDL definition for the deployed Web Service endpoint.
+    	  Builded by Ilya Melnik.
     	</p>
     </body>
+
 
 </html>
