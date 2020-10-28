@@ -48,13 +48,13 @@ EOF
         nexusArtifactUploader(
             nexusVersion: 'nexus3',
             protocol: 'https',
-            nexusUrl: 'nexus.k8s.shryshchanka.playpit.by/',
+            nexusUrl: 'nexus.k8s.shryshchanka.playpit.by',
             groupId: 'task.module10',
-            version: '3',
+            version: version,
             repository: 'maven-releases',
             credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa',
             artifacts: [
-                [artifactId: 'pipeline-shryshchanka-3.tar.gz',
+                [artifactId: projectName,
                 classifier: '',
                 file: 'pipeline-shryshchanka-' + version + '.tar.gz',
                 type: 'tar.gz']
