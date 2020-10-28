@@ -37,7 +37,6 @@ node('centos') {
         <code>Created: Siarhei Hryshchanka <br>
         <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
         <code>JOB_NAME: ${JOB_NAME}<br>
-        <code>GIT_COMMIT: ${GIT_COMMIT}<code>
         </body>
         </html>
         EOF
