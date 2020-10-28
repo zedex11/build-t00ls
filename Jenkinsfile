@@ -19,5 +19,7 @@ node('centos') {
         sh "echo mvn integration-test"
         sh "echo mvn post-integration-test"
     }
-
+    stage('Triggering job and fetching artefact after finishing'){
+        copyArtifacts filter: 'output.txt', fingerprintArtifacts: true, projectName: 'MNTLAB-shryshchanka-child1-build-job', selector: upstream()
+    }
 }
