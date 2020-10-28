@@ -14,6 +14,10 @@ node('centos') {
         withSonarQubeEnv('Sonar'){
             sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml ${sonar}:sonar"
         }
-	}
+    }
+    stage('Testing'){
+        def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
+        sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml pre-integration-test"
+    }
 
 }
