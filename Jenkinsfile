@@ -8,5 +8,15 @@ node('centos') {
         def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
         sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  package"
     }
+    stage('Sonar Publish'){
+	    def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
+        withSonarQubeEnv('Sonar'){
+            sh "${mvn} sonar:sonar"
+        }
+	}
+      
+   }
+
+
 
 }
