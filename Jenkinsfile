@@ -6,7 +6,7 @@ node('centos') {
     }
     stage('Compile-Package'){
         def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
-        sh "${mvn} package"
+        sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  package"
     }
 
 }
