@@ -5,7 +5,7 @@ node('centos') {
         url: 'git@github.com:zedex11/build-t00ls.git'
     }
     stage('Compile-Package'){
-        def mvn = tool (name: 'maven3', type: 'maven') + '/bin/mvn'
+        def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
         sh "${mvn} package"
     }
 
