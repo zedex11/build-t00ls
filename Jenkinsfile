@@ -14,9 +14,5 @@ node('centos') {
             sh "${mvn} sonar:sonar"
         }
 	}
-      
-   }
-
-
 
 }
