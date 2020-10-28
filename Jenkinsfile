@@ -24,6 +24,7 @@ node {
         copyArtifacts(projectName: 'MNTLAB-shryshchanka-child1-build-job');
     }
     stage('Packaging and Publishing results'){
-        sh "cp helloworld-ws/target/helloworld-ws.war . && tar cvzf pipeline-shryshchanka-$BUILD_NUMBER.tar.gz helloworld-ws.war Jenkinsfile output.txt"
+        sh "cp helloworld-ws/target/helloworld-ws.war ."
+        sh  "tar cvzf pipeline-shryshchanka-$BUILD_NUMBER.tar.gz helloworld-ws.war Jenkinsfile output.txt"
     }
 }
