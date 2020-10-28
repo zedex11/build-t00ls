@@ -1,6 +1,3 @@
-properties([
-    copyArtifactPermission('init-job,MNTLAB-shryshchanka-child1-build-job'),
-]);
 node {
     stage('Preparation (Checking out)'){
         git branch: 'shryshchanka', 
@@ -24,6 +21,6 @@ node {
     }
     stage('Triggering job and fetching artefact after finishing'){
         build job: 'MNTLAB-shryshchanka-child1-build-job', parameters: [[$class: 'StringParameterValue', name: 'BRANCH_NAME', value: 'shryshchanka']]
-        copyArtifacts fingerprintArtifacts: true, projectName: 'MNTLAB-shryshchanka-child1-build-job', selector: upstream()
+        copyArtifacts(projectName: 'MNTLAB-shryshchanka-child1-build-job');
     }
 }
