@@ -1,7 +1,7 @@
 node('centos') {
     stage('SCM Checkout'){
         git branch: 'shryshchanka', 
-        credentialsId: 'root', 
+        credentialsId: '32894695-c296-4b7d-a9d1-d66d35a9b476', 
         url: 'git@github.com:zedex11/build-t00ls.git'
     }
     stage('Compile-Package'){
