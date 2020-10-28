@@ -37,13 +37,12 @@ node('centos') {
         <code>Created: Siarhei Hryshchanka <br>
         <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
         <code>JOB_NAME: ${JOB_NAME}<br>
-        <code>GIT_BRANCH: ${GIT_BRANCH}<br>
         <code>GIT_COMMIT: ${GIT_COMMIT}<code>
         </body>
         </html>
         EOF
         sudo docker login docker.k8s.shryshchanka.playpit.by -u admin -p devopslab
-        sudo docker build -t docker.k8s.shryshchanka.playpit.by/tomcat:${BUILD_NUMBER} .
+        sudo docker build -t docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER} .
         sudo docker push docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}
         sudo docker image prune -f
         """
