@@ -50,7 +50,7 @@ EOF
             protocol: 'https',
             nexusUrl: 'nexus.k8s.shryshchanka.playpit.by/',
             groupId: 'task.module10',
-            version: ${BUILD_NUMBER},
+            version: '${BUILD_NUMBER}',
             repository: 'maven-releases',
             credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa',
             artifacts: [
