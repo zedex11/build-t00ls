@@ -50,11 +50,11 @@ EOF
             protocol: 'https',
             nexusUrl: 'nexus.k8s.shryshchanka.playpit.by/',
             groupId: 'task.module10',
-            version: '${BUILD_NUMBER}',
+            version: '3',
             repository: 'maven-releases',
             credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa',
             artifacts: [
-                [artifactId: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz',
+                [artifactId: 'pipeline-shryshchanka-3.tar.gz',
                 classifier: '',
                 file: 'pipeline-shryshchanka-' + version + '.tar.gz',
                 type: 'tar.gz']
