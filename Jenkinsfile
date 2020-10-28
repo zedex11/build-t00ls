@@ -39,7 +39,7 @@ node('centos') {
         <code>JOB_NAME: ${JOB_NAME}<br>
         </body>
         </html>
-        `EOF'
+        EOF
         sudo docker login docker.k8s.shryshchanka.playpit.by -u admin -p devopslab
         sudo docker build -t docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER} .
         sudo docker push docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}
