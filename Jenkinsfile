@@ -54,7 +54,7 @@ EOF
             repository: 'maven-releases',
             credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa',
             artifacts: [
-                [artifactId: 'hello-$BUILD_NUMBER.tar.gz',
+                [artifactId: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz',
                 classifier: '',
                 file: 'pipeline-shryshchanka-' + version + '.tar.gz',
                 type: 'tar.gz']
