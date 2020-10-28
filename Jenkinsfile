@@ -1,4 +1,4 @@
-node {
+node('centos') {
     stage('Preparation (Checking out)'){
         git branch: 'shryshchanka', 
         credentialsId: '32894695-c296-4b7d-a9d1-d66d35a9b476', 
