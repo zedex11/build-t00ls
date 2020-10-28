@@ -26,7 +26,7 @@ node('centos') {
     stage('Packaging and Publishing results'){
         sh """
         cp helloworld-project/helloworld-ws/target/helloworld-ws.war .
-        tar -czf pipeline-shryshchanka.tar.gz helloworld-ws.war Jenkinsfile output.txt
+        tar -czf pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz helloworld-ws.war Jenkinsfile output.txt
         """
     }
 }
