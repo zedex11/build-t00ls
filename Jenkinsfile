@@ -11,7 +11,7 @@ node('centos') {
     stage('Sonar Publish'){
 	    def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
         withSonarQubeEnv('Sonar'){
-            sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar"
+            sh "${mvn} org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar"
         }
 	}
 
