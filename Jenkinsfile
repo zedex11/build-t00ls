@@ -20,7 +20,7 @@ node {
         sh "echo mvn post-integration-test"
     }
     stage('Triggering job and fetching artefact after finishing'){
-        // copyArtifacts filter: 'output.txt', fingerprintArtifacts: true, projectName: 'MNTLAB-shryshchanka-child1-build-job', selector: upstream()
         build job: 'MNTLAB-shryshchanka-child1-build-job', parameters: [[$class: 'StringParameterValue', name: 'BRANCH_NAME', value: 'shryshchanka']]
+        copyArtifacts filter: 'output.txt', fingerprintArtifacts: true, projectName: 'MNTLAB-shryshchanka-child1-build-job', selector: upstream()
     }
 }
