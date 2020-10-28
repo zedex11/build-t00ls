@@ -27,7 +27,7 @@ node('centos') {
         sh """
         cp helloworld-project/helloworld-ws/target/helloworld-ws.war .
         tar -czf pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz helloworld-ws.war Jenkinsfile output.txt
-        cat <<EOF>helloworld-project/helloworld-ws/src/main/webapp/index.html
+        cat<<EOF>helloworld-project/helloworld-ws/src/main/webapp/index.html
         <html>
         <head>
         <title>shryshchanka</title>
@@ -39,7 +39,7 @@ node('centos') {
         <code>JOB_NAME: ${JOB_NAME}<br>
         </body>
         </html>
-        EOF
+EOF
         sudo docker login docker.k8s.shryshchanka.playpit.by -u admin -p devopslab
         sudo docker build -t docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER} .
         sudo docker push docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}
