@@ -1,5 +1,5 @@
 properties([
-    copyArtifactPermission('pipeline-job,MNTLAB-shryshchanka-child1-build-job'),
+    copyArtifactPermission('init-job,MNTLAB-shryshchanka-child1-build-job'),
 ]);
 node {
     stage('Preparation (Checking out)'){
