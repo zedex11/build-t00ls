@@ -9,7 +9,7 @@ node('centos') {
         sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  package"
     }
     stage('Sonar scan'){
-	    def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
+        def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
         def sonar = 'org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746'
         withSonarQubeEnv('Sonar'){
             sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml ${sonar}:sonar"
