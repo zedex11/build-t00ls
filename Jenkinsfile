@@ -4,22 +4,20 @@ node('centos') {
         credentialsId: '32894695-c296-4b7d-a9d1-d66d35a9b476', 
         url: 'git@github.com:zedex11/build-t00ls.git'
     }
-    
     def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
     stage('Building code'){
-        // def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
         sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  package"
     }
     stage('Sonar scan'){
-        // def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
         def sonar = 'org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746'
         withSonarQubeEnv('Sonar'){
             sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml ${sonar}:sonar"
         }
     }
     stage('Testing'){
-        // def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
         sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml pre-integration-test"
+        sh "echo mvn integration-test"
+        sh "echo mvn post-integration-test"
     }
 
 }
