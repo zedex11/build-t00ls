@@ -46,7 +46,7 @@ EOF
         sudo docker image prune -f
         """
         nexusArtifactUploader artifacts: [
-            [artifactId: 'pipeline-shryshchanka', classifier: '', file: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz', type: 'tar.gz']
+            [artifactId: 'pipeline-shryshchanka', classifier: '', file: 'pipeline-shryshchanka-51.tar.gz', type: 'tar.gz']
         ], 
         credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa', 
         groupId: 'task.module10', 
@@ -54,7 +54,7 @@ EOF
         nexusVersion: 'nexus3', 
         protocol: 'https', 
         repository: 'maven-releases', 
-        version: '${BUILD_NUMBER}'
+        version: '2.4'
     }
 
     // stage('upload artefact'){
