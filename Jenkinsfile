@@ -34,7 +34,7 @@ EOF
         """
         parallel(
             'Pre-integration-test': {
-                sh("${mvn} -f helloworld-project/helloworld-ws/pom.xml pre-integration-test")
+                sh("${mvn} -f helloworld-project/helloworld-ws/pom.xml clean verify -P pre-integration-test")
             },
             'Integration-test': {
                 sh("echo mvn integration-test")
