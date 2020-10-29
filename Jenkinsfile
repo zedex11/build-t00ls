@@ -6,7 +6,25 @@ node('centos') {
     }
     def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
     stage('Building code'){
-        sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  package"
+        sh """
+        cp helloworld-project/helloworld-ws/target/helloworld-ws.war .
+        tar -czf pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz helloworld-ws.war Jenkinsfile output.txt
+        cat<<EOF>helloworld-project/helloworld-ws/src/main/webapp/index.html
+        <html>
+        <head>
+        <title>shryshchanka</title>
+        </head>
+        <body>
+        <h1>Hello! Bellow information about this build:<h1>
+        <code>Created: Siarhei Hryshchanka <br>
+        <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
+        <code>JOB_NAME: ${JOB_NAME}<br>
+        </body>
+        </html>
+EOF
+        ${mvn} -f helloworld-project/helloworld-ws/pom.xml  package
+        """
+
     }
     stage('Sonar scan'){
         def sonar = 'org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746'
@@ -34,21 +52,6 @@ node('centos') {
     }
     stage('Packaging and Publishing results'){
         sh """
-        cp helloworld-project/helloworld-ws/target/helloworld-ws.war .
-        tar -czf pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz helloworld-ws.war Jenkinsfile output.txt
-        cat<<EOF>helloworld-project/helloworld-ws/src/main/webapp/index.html
-        <html>
-        <head>
-        <title>shryshchanka</title>
-        </head>
-        <body>
-        <h1>Hello! Bellow information about this build:<h1>
-        <code>Created: Siarhei Hryshchanka <br>
-        <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
-        <code>JOB_NAME: ${JOB_NAME}<br>
-        </body>
-        </html>
-EOF
         sudo docker login docker.k8s.shryshchanka.playpit.by -u admin -p devopslab
         sudo docker build -t docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER} .
         sudo docker push docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}
