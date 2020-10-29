@@ -68,7 +68,7 @@ node('centos') {
 
     stage('deploy') {
         node('gcp-k8s'){
-            sh "kubectl get pods -A"
+            sh "ls -a"
         }
     }
 
