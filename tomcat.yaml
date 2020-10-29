@@ -23,7 +23,7 @@ spec:
         app: tomcat
     spec:
       containers:
-      - image: docker.k8s.shryshchanka.playpit.by/tomcat:custom
+      - image: docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:custom
         ports: 
           - containerPort: 8080
             protocol: TCP
