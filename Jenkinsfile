@@ -67,7 +67,7 @@ EOF
         repository: 'maven-releases', 
         version: '${BUILD_NUMBER}'
     }
-    stage 'input'
+    stage 'Asking for manual approval'
         timeout(time: 120, unit: 'SECONDS') { // change to a convenient timeout for you
             input(
             id: 'Approve', message: 'Do you approve artefact build?', ok: 'yes'
