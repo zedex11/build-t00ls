@@ -8,12 +8,12 @@ node('centos') {
     stage('Building code'){
         sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  package"
     }
-    // stage('Sonar scan'){
-    //     def sonar = 'org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746'
-    //     withSonarQubeEnv('Sonar'){
-    //         sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml ${sonar}:sonar"
-    //     }
-    // }
+    stage('Sonar scan'){
+        def sonar = 'org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746'
+        withSonarQubeEnv('Sonar'){
+            sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml ${sonar}:sonar"
+        }
+    }
     // stage('Testing'){
     //     sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml pre-integration-test"
     //     sh "echo mvn integration-test"
@@ -22,11 +22,14 @@ node('centos') {
 
     stage('Tests') {
         parallel(
-            'Unit Tests': {
+            'Pre-integration-test': {
                 sh("${mvn} -f helloworld-project/helloworld-ws/pom.xml pre-integration-test")
             },
-            'API Tests': {
+            'Integration-test': {
                 sh("echo mvn integration-test")
+            },
+            'Post-integration-test': {
+                sh("echo mvn post-integration-test")
             }
         )
     }
