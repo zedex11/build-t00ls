@@ -45,8 +45,6 @@ EOF
         sudo docker push docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}
         sudo docker image prune -f
         """
-    }
-    stage('upload artefact'){
         nexusArtifactUploader artifacts: [
             [artifactId: 'pipeline-shryshchanka', classifier: '', file: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz', type: 'tar.gz']
         ], 
@@ -57,8 +55,21 @@ EOF
         protocol: 'https', 
         repository: 'maven-releases', 
         version: '${BUILD_NUMBER}'
-
     }
+
+    // stage('upload artefact'){
+    //     nexusArtifactUploader artifacts: [
+    //         [artifactId: 'pipeline-shryshchanka', classifier: '', file: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz', type: 'tar.gz']
+    //     ], 
+    //     credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa', 
+    //     groupId: 'task.module10', 
+    //     nexusUrl: 'nexus.k8s.shryshchanka.playpit.by', 
+    //     nexusVersion: 'nexus3', 
+    //     protocol: 'https', 
+    //     repository: 'maven-releases', 
+    //     version: '${BUILD_NUMBER}'
+
+    // }
 }
 
 // nexusArtifactUploader(
