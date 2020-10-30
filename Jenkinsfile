@@ -71,7 +71,7 @@ node('centos') {
             </head>
             <body>
             <h1>Hello! Bellow information about this build:<h1>
-            <code>Created: ${BUILD_USER} <br>
+            <code>Created: Siarhei Hryshchanka <br>
             <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
             <code>JOB_NAME: ${JOB_NAME}<br>
             </body>
