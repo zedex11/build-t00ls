@@ -42,6 +42,23 @@ node('centos') {
     }
     try {
         stage('Building code'){
+            sh """
+            cp helloworld-project/helloworld-ws/target/helloworld-ws.war .
+            tar -czf pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz helloworld-ws.war Jenkinsfile output.txt
+            cat<<EOF>helloworld-project/helloworld-ws/src/main/webapp/index.html
+            <html>
+            <head>
+            <title>shryshchanka</title>
+            </head>
+            <body>
+            <h1>Hello! Bellow information about this build:<h1>
+            <code>Created: Siarhei Hryshchanka <br>
+            <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
+            <code>JOB_NAME: ${JOB_NAME}<br>
+            </body>
+            </html>
+EOF
+            """
             sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  package"
         }
     } catch(err) {
@@ -61,23 +78,6 @@ node('centos') {
     }
     try {
         stage('Testing') {
-            sh """
-            cp helloworld-project/helloworld-ws/target/helloworld-ws.war .
-            tar -czf pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz helloworld-ws.war Jenkinsfile output.txt
-            cat<<EOF>helloworld-project/helloworld-ws/src/main/webapp/index.html
-            <html>
-            <head>
-            <title>shryshchanka</title>
-            </head>
-            <body>
-            <h1>Hello! Bellow information about this build:<h1>
-            <code>Created: Siarhei Hryshchanka <br>
-            <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
-            <code>JOB_NAME: ${JOB_NAME}<br>
-            </body>
-            </html>
-EOF
-            """
             parallel(
                 'Pre-integration-test': {
                     sh("${mvn} -f helloworld-project/helloworld-ws/pom.xml clean verify -P pre-integration-test")
