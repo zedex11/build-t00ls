@@ -43,7 +43,6 @@ node('centos') {
     try {
         stage('Building code'){
             sh """
-            GIT_COMMIT=`git log -n 1 --pretty=format:"%H"`
             cat<<EOF>helloworld-project/helloworld-ws/src/main/webapp/index.html
             <html>
             <head>
@@ -54,7 +53,6 @@ node('centos') {
             <code>Created: Siarhei Hryshchanka <br>
             <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
             <code>JOB_NAME: ${JOB_NAME}<br>
-            <code>GIT_COMMIT: ${GIT_COMMIT}<br>
             </body>
             </html>
 EOF
