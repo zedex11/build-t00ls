@@ -15,16 +15,16 @@ def push_docker(DOCKER_REGISTRY, USER, PASSWD, DOCKER_TAG){
     sudo docker image prune -f
     """
 }
-def push_nexus(){
+def push_nexus(nexusUrl,repository,groupId,artifactId,file,type,credentialsId){
     nexusArtifactUploader artifacts: [
-    [artifactId: 'pipeline-shryshchanka', classifier: '', file: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz', type: 'tar.gz']
+    [artifactId: "${artifactId}", classifier: '', file: "${file}", type: "${type}"]
     ], 
-    credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa', 
-    groupId: 'task.module10', 
-    nexusUrl: 'nexus.k8s.shryshchanka.playpit.by', 
+    credentialsId: "${credentialsId}", 
+    groupId: "${groupId}", 
+    nexusUrl: "${nexusUrl}", 
     nexusVersion: 'nexus3', 
     protocol: 'https', 
-    repository: 'maven-releases', 
+    repository: "${repository}", 
     version: '${BUILD_NUMBER}'
 }
 
@@ -121,15 +121,20 @@ EOF
             // protocol: 'https', 
             // repository: 'maven-releases', 
             // version: '${BUILD_NUMBER}'
+            def nexusUrl = 'nexus.k8s.shryshchanka.playpit.by'
+            def repository = 'maven-releases'
+            def groupId = 'task.module10'
+            def artifactId = 'pipeline-shryshchanka'
+            def file = 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz'
+            def type = 'tar.gz'
+            def credentialsId = 'fd995f9d-21e0-458d-8d02-63e40e2c9daa'
+            push_nexus("${nexusUrl}","${repository}","${groupId}","${artifactId}","${file}","${type}","${credentialsId}")
 
             def DOCKER_REGISTRY = 'docker.k8s.shryshchanka.playpit.by'
             def USER = 'admin'
             def PASSWD = 'devopslab'
             def DOCKER_TAG = 'docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}'
             push_docker("${DOCKER_REGISTRY}","${USER}","${PASSWD}","${DOCKER_TAG}")
-
-            
-            push_nexus()
         }
     } catch(err) {
         def STAGE_NAME = 'Triggering job and fetching artefact after finishing'
