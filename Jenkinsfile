@@ -1,86 +1,134 @@
+def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
+def sent_mail(err, STAGE_NAME){
+    mail bcc: '', 
+    body: "${err} ${BUILD_NUMBER} ${JOB_NAME} ${BUILD_URL} ${NODE_NAME} ${STAGE_NAME}", 
+    cc: '', 
+    from: 'zedex15@yandex.ru', 
+    replyTo: '', 
+    subject: "ERROR CI: Project name -> ${JOB_NAME}",
+    to: 'zedex15@yandex.ru'
+}
 node('centos') {
-    stage('Preparation (Checking out)'){
-        git branch: 'shryshchanka', 
-        credentialsId: '32894695-c296-4b7d-a9d1-d66d35a9b476', 
-        url: 'git@github.com:zedex11/build-t00ls.git'
-    }
-    def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
-    stage('Building code'){
-        sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  package"
-    }
-    stage('Sonar scan'){
-        def sonar = 'org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746'
-        withSonarQubeEnv('Sonar'){
-            sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml ${sonar}:sonar"
+    try {
+        stage('Preparation (Checking out)'){
+            git branch: 'shryshchanka', 
+            credentialsId: '32894695-c296-4b7d-a9d1-d66d35a9b476', 
+            url: 'git@github.com:zedex11/build-t00ls.git'
         }
+    } catch(err) {
+        def STAGE_NAME = 'Preparation (Checking out)'
+        sent_mail("${err}", "${STAGE_NAME}")
     }
-    stage('Testing') {
-        sh """
-        cp helloworld-project/helloworld-ws/target/helloworld-ws.war .
-        tar -czf pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz helloworld-ws.war Jenkinsfile output.txt
-        cat<<EOF>helloworld-project/helloworld-ws/src/main/webapp/index.html
-        <html>
-        <head>
-        <title>shryshchanka</title>
-        </head>
-        <body>
-        <h1>Hello! Bellow information about this build:<h1>
-        <code>Created: Siarhei Hryshchanka <br>
-        <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
-        <code>JOB_NAME: ${JOB_NAME}<br>
-        </body>
-        </html>
-EOF
-        """
-        parallel(
-            'Pre-integration-test': {
-                sh("${mvn} -f helloworld-project/helloworld-ws/pom.xml clean verify -P pre-integration-test")
-            },
-            'Integration-test': {
-                sh("echo mvn integration-test")
-            },
-            'Post-integration-test': {
-                sh("echo mvn post-integration-test")
+    try {
+        stage('Building code'){
+            sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  package"
+        }
+    } catch(err) {
+        def STAGE_NAME = 'Building code'
+        sent_mail("${err}", "${STAGE_NAME}")
+    }
+    try {
+        stage('Sonar scan'){
+            def sonar = 'org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746'
+            withSonarQubeEnv('Sonar'){
+                sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml ${sonar}:sonar"
             }
-        )
+        }
+    } catch(err) {
+        def STAGE_NAME = 'Sonar scan'
+        sent_mail("${err}", "${STAGE_NAME}")
     }
-
-    stage('Triggering job and fetching artefact after finishing'){
-        build job: 'MNTLAB-shryshchanka-child1-build-job', parameters: [[$class: 'StringParameterValue', name: 'BRANCH_NAME', value: 'shryshchanka']]
-        copyArtifacts(projectName: 'MNTLAB-shryshchanka-child1-build-job');
-    }
-    stage('Packaging and Publishing results'){
-        sh """
-        sudo docker login docker.k8s.shryshchanka.playpit.by -u admin -p devopslab
-        sudo docker build -t docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER} .
-        sudo docker push docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}
-        sudo docker image prune -f
-        """
-        nexusArtifactUploader artifacts: [
-            [artifactId: 'pipeline-shryshchanka', classifier: '', file: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz', type: 'tar.gz']
-        ], 
-        credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa', 
-        groupId: 'task.module10', 
-        nexusUrl: 'nexus.k8s.shryshchanka.playpit.by', 
-        nexusVersion: 'nexus3', 
-        protocol: 'https', 
-        repository: 'maven-releases', 
-        version: '${BUILD_NUMBER}'
-    }
-    stage 'Asking for manual approval'
-        timeout(time: 120, unit: 'SECONDS') { // change to a convenient timeout for you
-            input(
-            id: 'Approve', message: 'Do you approve artefact build?', ok: 'yes'
+    try {
+        stage('Testing') {
+            sh """
+            cp helloworld-project/helloworld-ws/target/helloworld-ws.war .
+            tar -czf pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz helloworld-ws.war Jenkinsfile output.txt
+            cat<<EOF>helloworld-project/helloworld-ws/src/main/webapp/index.html
+            <html>
+            <head>
+            <title>shryshchanka</title>
+            </head>
+            <body>
+            <h1>Hello! Bellow information about this build:<h1>
+            <code>Created: Siarhei Hryshchanka <br>
+            <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
+            <code>JOB_NAME: ${JOB_NAME}<br>
+            </body>
+            </html>
+EOF
+            """
+            parallel(
+                'Pre-integration-test': {
+                    sh("${mvn} -f helloworld-project/helloworld-ws/pom.xml clean verify -P pre-integration-test")
+                },
+                'Integration-test': {
+                    sh("echo mvn integration-test")
+                },
+                'Post-integration-test': {
+                    sh("echo mvn post-integration-test")
+                }
             )
         }
-    stage('deploy') {
-        node('gcp-k8s'){
-            git branch: 'shryshchanka', credentialsId: '32894695-c296-4b7d-a9d1-d66d35a9b476', url: 'git@github.com:zedex11/build-t00ls.git'
-            sh """
-            sed -i "/- image:/s/custom/${BUILD_NUMBER}/" tomcat.yaml
-            kubectl apply -f tomcat.yaml
-            """
+    } catch(err) {
+        def STAGE_NAME = 'Testing'
+        sent_mail("${err}", "${STAGE_NAME}")
+    }
+    try {
+        stage('Triggering job and fetching artefact after finishing'){
+            build job: 'MNTLAB-shryshchanka-child1-build-job', parameters: [[$class: 'StringParameterValue', name: 'BRANCH_NAME', value: 'shryshchanka']]
+            copyArtifacts(projectName: 'MNTLAB-shryshchanka-child1-build-job');
         }
+    } catch(err) {
+        def STAGE_NAME = 'Triggering job and fetching artefact after finishing'
+        sent_mail("${err}", "${STAGE_NAME}")
+    }
+    try {
+        stage('Packaging and Publishing results'){
+            sh """
+            sudo docker login docker.k8s.shryshchanka.playpit.by -u admin -p devopslab
+            sudo docker build -t docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER} .
+            sudo docker push docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}
+            sudo docker image prune -f
+            """
+            nexusArtifactUploader artifacts: [
+                [artifactId: 'pipeline-shryshchanka', classifier: '', file: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz', type: 'tar.gz']
+            ], 
+            credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa', 
+            groupId: 'task.module10', 
+            nexusUrl: 'nexus.k8s.shryshchanka.playpit.by', 
+            nexusVersion: 'nexus3', 
+            protocol: 'https', 
+            repository: 'maven-releases', 
+            version: '${BUILD_NUMBER}'
+        }
+    } catch(err) {
+        def STAGE_NAME = 'Triggering job and fetching artefact after finishing'
+        sent_mail("${err}", "${STAGE_NAME}")
+    }
+    try {
+        stage 'Asking for manual approval'
+            timeout(time: 120, unit: 'SECONDS') { // change to a convenient timeout for you
+                input(
+                id: 'Approve', message: 'Do you approve artefact build?', ok: 'yes'
+                )
+            }
+    } catch(err) {
+        def STAGE_NAME = 'Asking for manual approval'
+        sent_mail("${err}", "${STAGE_NAME}")
+    }
+    try {
+        stage('deploy') {
+            node('gcp-k8s'){
+                git branch: 'shryshchanka', credentialsId: '32894695-c296-4b7d-a9d1-d66d35a9b476', url: 'git@github.com:zedex11/build-t00ls.git'
+                sh """
+                sed -i "/- image:/s/custom/${BUILD_NUMBER}/" tomcat.yaml
+                kubectl apply -f tomcat.yaml
+                """
+            }
+        }
+    } catch(err) {
+        def STAGE_NAME = 'Asking for manual approval'
+        sent_mail("${err}", "${STAGE_NAME}")
     }
 
 }
