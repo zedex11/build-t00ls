@@ -42,7 +42,7 @@ node('centos') {
     }
     try {
         stage('Building code'){
-            sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  packages"
+            sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  package"
         }
     } catch(err) {
         def STAGE_NAME = 'Building code'
