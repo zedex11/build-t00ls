@@ -42,7 +42,7 @@ node('centos') {
     }
     try {
         stage('Building code'){
-            sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  package"
+            sh "${mvn} -f helloworld-project/helloworld-ws/pom.xml  packages"
         }
     } catch(err) {
         def STAGE_NAME = 'Building code'
@@ -105,22 +105,7 @@ EOF
     }
     try {
         stage('Packaging and Publishing results'){
-            // sh """
-            // sudo docker login docker.k8s.shryshchanka.playpit.by -u admin -p devopslab
-            // sudo docker build -t docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER} .
-            // sudo docker push docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}
-            // sudo docker image prune -f
-            // """
-            // nexusArtifactUploader artifacts: [
-            //     [artifactId: 'pipeline-shryshchanka', classifier: '', file: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz', type: 'tar.gz']
-            // ], 
-            // credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa', 
-            // groupId: 'task.module10', 
-            // nexusUrl: 'nexus.k8s.shryshchanka.playpit.by', 
-            // nexusVersion: 'nexus3', 
-            // protocol: 'https', 
-            // repository: 'maven-releases', 
-            // version: '${BUILD_NUMBER}'
+            //nexus push
             def nexusUrl = 'nexus.k8s.shryshchanka.playpit.by'
             def repository = 'maven-releases'
             def groupId = 'task.module10'
@@ -129,7 +114,7 @@ EOF
             def type = 'tar.gz'
             def credentialsId = 'fd995f9d-21e0-458d-8d02-63e40e2c9daa'
             push_nexus("${nexusUrl}","${repository}","${groupId}","${artifactId}","${file}","${type}","${credentialsId}")
-
+            //docker push
             def DOCKER_REGISTRY = 'docker.k8s.shryshchanka.playpit.by'
             def USER = 'admin'
             def PASSWD = 'devopslab'
