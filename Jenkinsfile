@@ -43,8 +43,7 @@ node('centos') {
     try {
         stage('Building code'){
             sh """
-            cp helloworld-project/helloworld-ws/target/helloworld-ws.war .
-            tar -czf pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz helloworld-ws.war Jenkinsfile output.txt
+            GIT_COMMIT=`git log -n 1 --pretty=format:"%H"`
             cat<<EOF>helloworld-project/helloworld-ws/src/main/webapp/index.html
             <html>
             <head>
@@ -55,6 +54,7 @@ node('centos') {
             <code>Created: Siarhei Hryshchanka <br>
             <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
             <code>JOB_NAME: ${JOB_NAME}<br>
+            <code>GIT_COMMIT: ${GIT_COMMIT}<br>
             </body>
             </html>
 EOF
@@ -105,6 +105,10 @@ EOF
     }
     try {
         stage('Packaging and Publishing results'){
+            sh """
+            cp helloworld-project/helloworld-ws/target/helloworld-ws.war .
+            tar -czf pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz helloworld-ws.war Jenkinsfile output.txt
+            """
             //nexus push
             def nexusUrl = 'nexus.k8s.shryshchanka.playpit.by'
             def repository = 'maven-releases'
