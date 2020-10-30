@@ -125,17 +125,12 @@ EOF
         def STAGE_NAME = 'Triggering job and fetching artefact after finishing'
         sent_mail("${err}", "${STAGE_NAME}")
     }
-    try {
-        stage 'Asking for manual approval'
-            timeout(time: 120, unit: 'SECONDS') { // change to a convenient timeout for you
-                input(
-                id: 'Approve', message: 'Do you approve artefact build?', ok: 'yes'
-                )
-            }
-    } catch(err) {
-        def STAGE_NAME = 'Asking for manual approval'
-        sent_mail("${err}", "${STAGE_NAME}")
-    }
+    stage 'Asking for manual approval'
+        timeout(time: 120, unit: 'SECONDS') { // change to a convenient timeout for you
+            input(
+            id: 'Approve', message: 'Do you approve artefact build?', ok: 'yes'
+            )
+        }
     try {
         stage('deploy') {
             node('gcp-k8s'){
