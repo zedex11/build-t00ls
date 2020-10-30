@@ -1,12 +1,33 @@
 def sent_mail(err, STAGE_NAME){
     mail bcc: '', 
-    body: "${err} ${BUILD_NUMBER} ${JOB_NAME} ${BUILD_URL} ${NODE_NAME} ${STAGE_NAME}", 
+    body: "ERROR: ${err} OCCURRED in BUILD_NUMBER: ${BUILD_NUMBER}, JOB_NAME: ${JOB_NAME}, BUILD_URL: ${BUILD_URL}, NODE_NAME: ${NODE_NAME}, on the STAGE: ${STAGE_NAME}", 
     cc: '', 
     from: 'zedex15@yandex.ru', 
     replyTo: '', 
     subject: "ERROR CI: Project name -> ${JOB_NAME}",
     to: 'zedex15@yandex.ru'
 }
+def push_docker(){
+    sh """
+    sudo docker login docker.k8s.shryshchanka.playpit.by -u admin -p devopslab
+    sudo docker build -t docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER} .
+    sudo docker push docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}
+    sudo docker image prune -f
+    """
+}
+def push_nexus(){
+    nexusArtifactUploader artifacts: [
+    [artifactId: 'pipeline-shryshchanka', classifier: '', file: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz', type: 'tar.gz']
+    ], 
+    credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa', 
+    groupId: 'task.module10', 
+    nexusUrl: 'nexus.k8s.shryshchanka.playpit.by', 
+    nexusVersion: 'nexus3', 
+    protocol: 'https', 
+    repository: 'maven-releases', 
+    version: '${BUILD_NUMBER}'
+}
+
 node('centos') {
     def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
     try {
@@ -84,22 +105,24 @@ EOF
     }
     try {
         stage('Packaging and Publishing results'){
-            sh """
-            sudo docker login docker.k8s.shryshchanka.playpit.by -u admin -p devopslab
-            sudo docker build -t docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER} .
-            sudo docker push docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}
-            sudo docker image prune -f
-            """
-            nexusArtifactUploader artifacts: [
-                [artifactId: 'pipeline-shryshchanka', classifier: '', file: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz', type: 'tar.gz']
-            ], 
-            credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa', 
-            groupId: 'task.module10', 
-            nexusUrl: 'nexus.k8s.shryshchanka.playpit.by', 
-            nexusVersion: 'nexus3', 
-            protocol: 'https', 
-            repository: 'maven-releases', 
-            version: '${BUILD_NUMBER}'
+            // sh """
+            // sudo docker login docker.k8s.shryshchanka.playpit.by -u admin -p devopslab
+            // sudo docker build -t docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER} .
+            // sudo docker push docker.k8s.shryshchanka.playpit.by/helloworld-shryshchanka:${BUILD_NUMBER}
+            // sudo docker image prune -f
+            // """
+            // nexusArtifactUploader artifacts: [
+            //     [artifactId: 'pipeline-shryshchanka', classifier: '', file: 'pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz', type: 'tar.gz']
+            // ], 
+            // credentialsId: 'fd995f9d-21e0-458d-8d02-63e40e2c9daa', 
+            // groupId: 'task.module10', 
+            // nexusUrl: 'nexus.k8s.shryshchanka.playpit.by', 
+            // nexusVersion: 'nexus3', 
+            // protocol: 'https', 
+            // repository: 'maven-releases', 
+            // version: '${BUILD_NUMBER}'
+            push_docker()
+            push_nexus()
         }
     } catch(err) {
         def STAGE_NAME = 'Triggering job and fetching artefact after finishing'
