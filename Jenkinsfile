@@ -62,6 +62,7 @@ node('centos') {
     try {
         stage('Testing') {
             sh """
+            GIT_COMMIT=`git log -n 1 --pretty=format:"%H"`
             cp helloworld-project/helloworld-ws/target/helloworld-ws.war .
             tar -czf pipeline-shryshchanka-${BUILD_NUMBER}.tar.gz helloworld-ws.war Jenkinsfile output.txt
             cat<<EOF>helloworld-project/helloworld-ws/src/main/webapp/index.html
@@ -71,9 +72,11 @@ node('centos') {
             </head>
             <body>
             <h1>Hello! Bellow information about this build:<h1>
-            <code>Created: Siarhei Hryshchanka <br>
+            <code>Created: ${BUILD_USER} <br>
             <code>BUILD_NUMBER: ${BUILD_NUMBER}<br>
             <code>JOB_NAME: ${JOB_NAME}<br>
+            <code>BRANCH_NAME: ${BRANCH_NAME}<br>
+            <code>GIT_COMMIT: ${GIT_COMMIT}<br>
             </body>
             </html>
 EOF
