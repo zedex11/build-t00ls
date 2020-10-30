@@ -1,4 +1,4 @@
-def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
+
 def sent_mail(err, STAGE_NAME){
     mail bcc: '', 
     body: "${err} ${BUILD_NUMBER} ${JOB_NAME} ${BUILD_URL} ${NODE_NAME} ${STAGE_NAME}", 
@@ -9,6 +9,7 @@ def sent_mail(err, STAGE_NAME){
     to: 'zedex15@yandex.ru'
 }
 node('centos') {
+    def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
     try {
         stage('Preparation (Checking out)'){
             git branch: 'shryshchanka', 
@@ -130,6 +131,4 @@ EOF
         def STAGE_NAME = 'Asking for manual approval'
         sent_mail("${err}", "${STAGE_NAME}")
     }
-
 }
-
