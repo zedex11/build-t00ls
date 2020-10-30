@@ -1,4 +1,3 @@
-
 def sent_mail(err, STAGE_NAME){
     mail bcc: '', 
     body: "${err} ${BUILD_NUMBER} ${JOB_NAME} ${BUILD_URL} ${NODE_NAME} ${STAGE_NAME}", 
