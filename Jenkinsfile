@@ -130,4 +130,14 @@ EOF
         def STAGE_NAME = 'Asking for manual approval'
         sent_mail("${err}", "${STAGE_NAME}")
     }
+    stage('Sending status'){
+        mail bcc: '', 
+        body: "Build: ${BUILD_NUMBER} job: ${JOB_NAME} build_url: ${BUILD_URL} node_name: ${NODE_NAME} was successful", 
+        cc: '', 
+        from: 'zedex15@yandex.ru', 
+        replyTo: '', 
+        subject: "JOB STATUS: Project name -> ${JOB_NAME}",
+        to: 'zedex15@yandex.ru'
+    }
+
 }
